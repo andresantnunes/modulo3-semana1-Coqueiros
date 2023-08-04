@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-dotnet
+spec:
+  selector:
+    matchLabels:
+      app: hello-dotnet
+  template:
+    metadata:
+      labels:
+        app: hello-dotnet
+    spec:
+      containers:
+      - name: hello-dotnet
+        image: dotnet-docker
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: ASPNETCORE_URLS
+            value: http://+:80
+          - name: WebApiBaseAddress
+            value: http://webapi
+          - name: ASPNETCORE_ENVIRONMENT 
+            value: Development
+        resources:
+          limits:
+            memory: "64Mi"
+            cpu: "128m"
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-dotnet
+spec:
+  selector:
+    app: hello-dotnet
+  ipFamilies:
+  - IPv4
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
