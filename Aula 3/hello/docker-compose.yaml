@@ -1,0 +1,9 @@
+# Cria um ambiente local
+services: # define os serviço a serem executado nos containeres
+  db: # serviço banco de dados
+    image: postgres # imagem é a do postgres
+    restart: always # sempre que eu executar esse aquivo ele ira reiniciar
+    environment:
+      POSTGRES_PASSWORD: 12345
+    # volumes: # espaço dentro do container para o dados
+    #  - postgres-data:/var/lib/postgresql/data

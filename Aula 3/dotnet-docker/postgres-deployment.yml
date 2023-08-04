@@ -1,0 +1,32 @@
+apiVersion: extensions / v1beta1
+kind: Deployment
+metadata:
+ name: postgres
+namespace: production
+spec:
+ replicas: 1
+template:
+ metadata:
+ labels:
+ k8s - app: postgres
+spec:
+ containers:
+ -name: postgres
+image: dr.xenonstack.com: 5050 / postgres: v9 .6
+imagePullPolicy: "IfNotPresent"
+ports:
+ -containerPort: 5432
+env:
+ -name: POSTGRES_USER
+value: postgres - name: POSTGRES_PASSWORD
+value: superpostgres - name: PGDATA
+value: /var/lib / postgresql / data / pgdata
+volumeMounts:
+ -mountPath: /var/lib / postgresql / data
+name: postgredb
+volumes:
+ -name: postgredb
+glusterfs:
+ endpoints: glusterfs - cluster
+path: postgres - disk
+readOnly: false

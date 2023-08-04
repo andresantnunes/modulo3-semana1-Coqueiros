@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-api
+spec:
+  selector:
+    matchLabels:
+      app: my-api
+  template:
+    metadata:
+      labels:
+        app: my-api
+    spec:
+      containers:
+      - name: my-api
+        image: dotnet-docker-app
+        imagePullPolicy: IfNotPresent
+        env:
+          - name:  PORT
+            value: "80"
+        resources:
+          limits:
+            memory: "64Mi"
+            cpu: "128m"
+        ports:
+        - containerPort: 5000
+          name: http
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-api
+spec:
+  selector:
+    app: my-api
+  ipFamilies:
+  - IPv4
+  ports:
+  - port: 5000
+    targetPort: http
+
+---

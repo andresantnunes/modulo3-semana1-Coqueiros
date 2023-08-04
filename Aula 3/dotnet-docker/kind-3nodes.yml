@@ -1,0 +1,10 @@
+apiVersion: storage.k8s.io/v1beta1
+kind: StorageClass
+metadata:
+  name: mysql-sc
+provisioner: csi.trident.netapp.io
+reclaimPolicy: Retain
+mountOptions:
+  - debug
+parameters:
+  backendType:ontap-nas
